@@ -1,0 +1,107 @@
+SOMMAIRE : 
+→ Création d’une nouvelle application Node.js
+→ Initialisation d’un premier serveur
+→ Installation de dépendances utilitaires
+→ Mise en place de la structure des dossiers / fichiers
+→ Utilisation de « mocks » de données
+→ Implémentation des services / contrôleurs / routes
+→ Test via Postman
+
+ETAPES DU SETUP : 
+1) Créer un dossier /backend
+2) Initialiser le fichier package.json : npm init -y
+3) Installer la dépendance typescript : npm install typescript --save-dev
+4) Installer les dépendances de types pour Node.js : npm install @types/node --save-dev
+5) Initialiser un fichier tsconfig.json : npx tsc --init --rootDir src --outDir build \ --esModuleInterop --resolveJsonModule --lib es6 \ --module commonjs --allowJs true --noImplicitAny true
+6) Créer un dossier /src contenant un fichier index.ts avec le contenu suivant : console.log('Hello world!')
+7) Compiler le code en utilisant la configuration typescript : npx tsc
+8) Exécuter l’application Node.js depuis le dossier /src : node index.ts
+9) Installer la dépendance ts-node : npm install ts-node
+10) Modification du tsconfig.json : Remplacer le contenu du fichier tsconfig.json par : 
+{
+  "compilerOptions": {
+    "target": "es6",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "es2016",
+      "esnext",
+      "dom"
+    ],
+    "outDir": "build",
+    "strict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+  },
+  "include": [
+    "src/index.ts"
+  ],
+  "exclude": [
+    "build"
+  ]
+}
+
+11) Création d’un serveur : Remplacer le contenu du fichier index.ts par : 
+import * as http from "http";
+const hostname = "127.0.0.1";
+const port = 5000;
+const server = http.createServer((_req, res) => {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain");
+    res.end("Hello, World!\n");
+});
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+12) Définir le projet en tant que module en ajoutant cette ligne dans le package.json : "type": "module",
+13) Ajouter la commande de démarrage suivante dans la partie scripts du package.json : "start": "ts-node-esm src/index.ts"
+14) Exécuter l’application Node.js : npm run start
+15) n o d e m o n Permet de rafraichir le serveur node.js lors de modifications : Installer nodemon : npm install nodemon
+16) Créer un fichier nodemon.json à la racine du dossier /backend : 
+{
+"ignore": [
+"**/*.test.ts",
+"**/*.spec.ts",
+"node_modules"
+],
+"watch": [
+"src"
+],
+"exec": "ts-node-esm src/index.ts",
+"ext": "ts"
+}
+
+17) Modifier le script de démarrage dans le package.json : "start": "npx tsc && nodemon"
+18) L’application peut désormais être démarrée via la commande suivante : npm start
+19) Installer Express.js : npm install express
+20) Installer les types pour Express.js : npm install --save-dev @types/express
+21) Modification du fichier index.ts : Remplacer le contenu par : 
+import * as http from "http";
+import express from "express";
+
+const hostname = "127.0.0.1";
+const port = 5000;
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Hello !");
+});
+
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+22) Installer body-parser : npm install body-parser
+23) Ajouter la ligne suivante dans le fichier index.ts (ainsi que l’import) : app.use(bodyParser.json());
+24) npm install mongoose
+
+
+
+
+
